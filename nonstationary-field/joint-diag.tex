@@ -1,0 +1,102 @@
+\documentclass{beamer}
+\usetheme{me} % aalto theme
+
+
+% Packages for math, language, encoding etc.
+\usepackage{tikz, ctable}
+\usepackage{bm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[absolute,overlay]{textpos}	
+\usepackage{amsfonts,amssymb,amsbsy,amsthm,amsmath,mathtools,enumerate,verbatim}
+\usepackage{stmaryrd} % double square brackets
+\usepackage{color, colortbl}
+\usepackage[font=scriptsize]{caption}
+\usepackage{csquotes}
+\usepackage{tabularray}
+\usepackage{hyperref}
+\usepackage{datetime}
+\usepackage{pifont}
+
+% For def of elliptical distributions
+
+% Bibliography and style.
+\usepackage[style=authoryear, maxcitenames=2]{biblatex}
+\addbibresource{sources.bib}
+\setbeamertemplate{bibliography item}{}
+
+%\usepackage[
+%  backend=biber,
+%  style=authoryear,
+%]{biblatex}
+%\addbibresource{sources.bib}
+
+% Show greyed table of contents before section.
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+\setcounter{tocdepth}{1}
+
+
+\AtBeginSubsection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{subtitle}
+    \usebeamerfont{subtitle}\insertsubsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+% Info about presentation
+\title{On nonstationary subspace analysis for multivariate random fields}
+\subtitle{Joint work with Perttu Saarela, Sandra De Iaco and Klaus Nordhausen}
+\author{Jaakko Pere}
+
+%\newdate{date}{28}{5}{2026}
+\date{LinStat 2026}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DOCUMENT BEGINS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Agenda of the Presentation}
+\tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Motivation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Test slide}
+  Test cite~\parencite{bachoc2020}.
+  \begin{itemize}
+    \item Another test~\cite{flumian2024}.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  Link to slides:
+  \url{https://github.com/perej1/presentations/tree/main/nonstationary-field}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[allowframebreaks]{References}
+  \printbibliography
+\end{frame}
+\end{document}

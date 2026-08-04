@@ -1,0 +1,3 @@
+@default_files = ('joint-diag.tex');
+ensure_path( 'TEXINPUTS', '../styles//' );
+ensure_path( 'BSTINPUTS', '../styles//' );
