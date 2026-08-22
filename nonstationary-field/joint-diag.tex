@@ -238,7 +238,7 @@
 
 \begin{frame}{Identifiability: definition}
   The unmixing problem based on $M_{k, n}$ is identifiable if for every matrix
-  $\bm\Omega_{k,n}$ satisfying definition of the previous slide there exist
+  $\bm\Omega_{k,n}$ satisfying definition on the previous slide there exist
   invertible matrices $\bm B_\eta\in\mathbb{R}^{q\times q}$ and $\bm
   B_s\in\mathbb{R}^{(d - q)\times (d - q)}$ such that
   \begin{equation*}
@@ -279,14 +279,14 @@
   \begin{itemize}
     \item Let $\lambda_\eta^{(\min)}$ be the smallest eigenvalue of $M_{k,
     n}(\eta)$
-    \item Let $\lambda_s^{(\max)}$ the largest eigenvalue of $M_{k, n}(s)$.
+    \item Let $\lambda_s^{(\max)}$ be the largest eigenvalue of $M_{k, n}(s)$.
     \pause
     \item Then unmixing problem based on $M_{k, n}$ is identifiable if and
     only if $\lambda_\eta^{(\min)} > \lambda_s^{(\max)}$.
   \end{itemize}
   \pause
   Meaning: all the components of $\eta$ are nonstationary in the mean is
-  sufficient.
+  necessary.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -398,7 +398,8 @@
   \pause
   Messages:
   \begin{itemize}
-    \item For $\sqrt{n_0}$-consistent estimation you need $k/n=O(1)$.
+    \item For $\sqrt{n_0}$-consistent estimation it is sufficient that
+    $k/n=O(1)$.
     \pause
     \item The frameworks
     \begin{itemize}
@@ -407,6 +408,16 @@
   \end{itemize}
   \pause
   can fail.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Future prospects}
+  \begin{itemize}
+    \item Unknown subspace dimensions
+    \item Other forms of nonstationarity
+    \item Heavy-tailed setting
   \end{itemize}
 \end{frame}
 
