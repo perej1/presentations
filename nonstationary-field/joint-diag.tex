@@ -122,7 +122,7 @@
     \end{pmatrix},
   \end{equation*}
   where $\bm A\in\mathbb{R}^{d\times d}$ is invertible and does not depend on
-  $\bm p$.
+  $\bm u$.
   \begin{itemize}
     \item $\textcolor{orange}{\bm A_\eta}\in\mathbb{R}^{d\times q}$ and
     $\textcolor{Cyan}{\bm A_s}\in\mathbb{R}^{d\times (d-q)}$.
@@ -212,9 +212,9 @@
 
 \begin{frame}{Extracting the unmixing matrix}
   \begin{enumerate}
-    \item Whiten the field: $\tilde{\bm x}(\bm u, t) = \bm W\left(\bm x(\bm u,
-    t) - m_0(\bm x)\right)$, where $\bm W\mathrm{Cov}_0(\bm x)\bm W^\intercal =
-    \bm I$.
+    \item Whiten the field: $\tilde{\bm x}(\bm u) = \bm W\left(\bm x(\bm u) -
+    m_0(\bm x)\right)$, where $\bm W\mathrm{Cov}_0(\bm x)\bm W^\intercal = \bm
+    I$.
     \pause
     \item Diagonalize: Let $\bm V_{k, n}\in\mathbb{R}^{d\times d}$ be a
     matrix such that
@@ -306,7 +306,7 @@
   \begin{equation*}
     \begin{split}
       \hat{\mathrm{m}}_j(x) &= \frac{1}{n} \sum_{\bm u\in S_j}
-      x(\bm u, t), \\
+      x(\bm u), \\
       \widehat{\mathrm{Cov}}_j(x) &= \frac{1}{n} \sum_{\bm u\in S_j}
       \left(\bm x(\bm u) - \hat{\mathrm{m}}_j(x)\right)
       \left(\bm x(\bm u) - \hat{\mathrm{m}}_j(x)\right)^\intercal,
@@ -393,7 +393,7 @@
 \begin{frame}{The main result}
   We have
   \begin{equation*}
-    r_{k,n} = O_\mathbb{P}\left(\frac{1}{n} + \frac{1}{\sqrt{kn}}\right)
+    r_{k,n} = \frac{1}{n} + \frac{1}{\sqrt{kn}}
   \end{equation*}
   \pause
   Messages:
