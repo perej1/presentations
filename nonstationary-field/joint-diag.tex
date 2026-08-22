@@ -8,7 +8,7 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage[absolute,overlay]{textpos}	
 \usepackage{amsfonts,amssymb,amsbsy,amsthm,amsmath,mathtools,enumerate,verbatim}
 \usepackage{stmaryrd} % double square brackets
@@ -76,14 +76,322 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Motivation}
+\section{Motivation and model definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Test slide}
-  Test cite~\parencite{bachoc2020}.
+\begin{frame}{Linear blind source separation for random fields}
+  Let $\bm u\in\mathbb{R}^p$, and let $x$ be a $d$-dimensional random field on
+  $\mathbb{R}^p$. Consider a model
+  \begin{equation*}
+    \begin{pmatrix}
+      x_1(\bm u) \\ \vdots \\ x_d(\bm u)
+    \end{pmatrix} =
+    x(\bm u) = \bm A z(\bm u) = A
+    \begin{pmatrix}
+      z_1(\bm u) \\ \vdots \\ z_d(\bm u)
+    \end{pmatrix},
+  \end{equation*}
+  where $\bm A\in\mathbb{R}^{d\times d}$ is invertible and does not depend on
+  $\bm p$.
+  \pause
   \begin{itemize}
-    \item Another test~\cite{flumian2024}.
+    \item[$\Rightarrow$] We observe $x$ but $z$ has simpler dependence
+    structure. The goal is to extract $\bm A$ or $z$.
+    \pause
+    \item Components of $z(\bm u)$ are uncorrelated and
+    \emph{stationary}~\parencite{bachoc2020}.
+    \item Components of $z(\bm u)$ are independent and
+    \emph{nonstationary}~\parencite{bachoc2024}.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Our model}
+  Let $\bm u\in\mathbb{R}^p$, and let $x$ be a $d$-dimensional random field on
+  $\mathcal{U}\subset\mathbb{R}^p$. Consider the model
+  \begin{equation*}
+    x(\bm u) = \bm A z(\bm u)
+    = \begin{pmatrix}
+      \textcolor{orange}{\bm A_\eta}
+      & \textcolor{Cyan}{\bm A_s}
+    \end{pmatrix}
+    \begin{pmatrix}
+      \textcolor{orange}{\eta(\bm u)} \\ \textcolor{Cyan}{s(\bm u)},
+    \end{pmatrix},
+  \end{equation*}
+  where $\bm A\in\mathbb{R}^{d\times d}$ is invertible and does not depend on
+  $\bm p$.
+  \begin{itemize}
+    \item $\textcolor{orange}{\bm A_\eta}\in\mathbb{R}^{d\times q}$ and
+    $\textcolor{Cyan}{\bm A_s}\in\mathbb{R}^{d\times (d-q)}$.
+    \pause
+    \item Components of $q$-dimensional field $\textcolor{orange}{\eta(\bm u)}$
+    are \emph{nonstationary}.
+    \item Components of $(d-q)$-dimensional field $\textcolor{Cyan}{s(\bm u)}$
+    are \emph{stationary}.
+    \item The random fields $\textcolor{orange}{\eta}$ and $\textcolor{Cyan}{s}$
+    are independent.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  For simplicity of the presentation, we only consider nonstationarity in the
+  mean.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Population version of the estimator}
+
+\begin{frame}{Local and global statistics (1)}
+  Divide the domain $\mathcal{U}\subset\mathbb{R}^p$ in blocks $\mathcal{S}_j$.
+  Sample in block $\mathcal{S}_j$ is $S_j$.
+  \begin{itemize}
+    \item Number of blocks is $k$. Index blocks by $j\in\{1,\ldots, k\}$.
+    \item Sample size in each block is $n$. Index observations in a block by
+    $i\in\{1, \ldots, n\}$.
+    \pause
+    \item We denote that $S_0$ is the total sample and $n_0$ is the total sample
+    size.
+    \pause
+    \item Idea for estimation
+    \begin{itemize}
+      \item[$\Rightarrow$] Compare local statistics to global statistics.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Local and global statistics (2)}
+  Define the following local (and global) statistics
+  \begin{equation*}
+    \begin{split}
+      \mathrm{m}_{j}(x) &= \frac{1}{n} \sum_{\bm u\in S_j}
+      \mathbb{E}\left(x(\bm u)\right), \\
+      \mathrm{Cov}_{j}(x) &= \frac{1}{n} \sum_{\bm u\in S_j}
+      \mathbb{E}\left(\left(x(\bm u) - m_j(x)\right)
+      \left(x(\bm u) - m_j(x)\right)^\intercal\right)
+    \end{split}
+  \end{equation*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{For idenfiability assume\ldots}
+  $\mathrm{Cov}\left(s(\bm u)\right) = \bm I$, $\mathrm{m}_{0}(\eta) = \bm 0$
+  and $\mathrm{Cov}_{0}(\eta) = \bm I$.
+  \vspace{.5cm}
+  \pause
+
+  ``Location'' and ``covariance'' fixed: It follows that $\mathrm{m}_0(z) = \bm
+  0$ and $\mathrm{Cov}_0\left(z\right) = \bm I$.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Scatter based on blocks}
+  Define
+  \begin{equation*}
+    M_{k, n}(x) = \frac{1}{k}\sum_{j = 1}^k \left(\mathrm{m}_j(x)
+    - \mathrm{m}_0(x)\right)
+    \left(\mathrm{m}_j(x) - \mathrm{m}_0(x)\right)^\intercal
+  \end{equation*}
+  \pause
+  Idea:
+  \begin{itemize}
+    \item For stationary $s$ we have $M_{k, n}(s) = \bm 0$.
+    \item For nonstationary $\eta$ we have $M_{k, n}(\eta) \neq \bm 0$ is
+    symmetric positive definite.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Extracting the unmixing matrix}
+  \begin{enumerate}
+    \item Whiten the field: $\tilde{\bm x}(\bm u, t) = \bm W\left(\bm x(\bm u,
+    t) - m_0(\bm x)\right)$, where $\bm W\mathrm{Cov}_0(\bm x)\bm W^\intercal =
+    \bm I$.
+    \pause
+    \item Diagonalize: Let $\bm V_{k, n}\in\mathbb{R}^{d\times d}$ be a
+    matrix such that
+    \begin{equation*}
+      \bm V_{k, n} \bm V_{k, n}^\intercal
+      = \bm I
+      \quad\text{and}\quad
+      \bm V_{k, n}^\intercal M_{k, n}(\tilde{x})
+      \bm V_{k, n} = \bm \Lambda_{k, n},
+    \end{equation*}
+    where $\bm\Lambda_{k, n}\in\mathbb{R}^{d\times d}$ is a diagonal matrix with
+    diagonal elements in nonincreasing order.
+    \pause
+    \item Transform back: an unmixing matrix $\bm\Omega_{k,
+    n}\in\mathbb{R}^{d\times d}$ based on $M_{k, n}$ is defined as
+    $\bm\Omega_{k, n} = \bm V_{k, n}^\intercal \bm W$.
+  \end{enumerate} 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Identifiability: definition}
+  The unmixing problem based on $M_{k, n}$ is identifiable if for every matrix
+  $\bm\Omega_{k,n}$ satisfying definition of above slide there exist invertible
+  matrices $\bm B_\eta\in\mathbb{R}^{q\times q}$ and $\bm B_s\in\mathbb{R}^{(d -
+  q)\times (d - q)}$ such that
+  \begin{equation*}
+    \bm\Omega_{k,n} = 
+    \begin{pmatrix}
+      \bm\Omega_\eta \\ \bm\Omega_s
+    \end{pmatrix} =
+    \begin{pmatrix}
+      \bm B_\eta & \bm 0 \\
+      \bm 0 & \bm B_s
+    \end{pmatrix}
+    \bm A^{-1},\ \bm\Omega_\eta\in\mathbb{R}^{q\times d},\
+    \bm\Omega_s\in\mathbb{R}^{(d-q)\times d}.
+  \end{equation*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Identifiability: meaning}
+  We obtain ``mixed'' stationary and nonstatiory signals:
+  \begin{itemize}
+    \item $\bm\Omega_\eta x(\bm u) = \bm B_\eta \eta(\bm u)$
+    \item $\bm\Omega_s x(\bm u) = \bm B_s s(\bm u)$
+  \end{itemize}
+  \pause
+  We can choose $\bm B_\eta$ and $\bm B_s$ to be orthogonal:
+  \begin{itemize}
+    \item $\mathrm{Cov}\left(\bm B_s \bm s(\bm u)\right) = \bm I$,
+    \item For example, under $\mathrm{Cov}(\eta(\bm u)) = \sigma^2(\bm u)\bm I$,
+    we have that $\mathrm{Cov}\left(\bm B_\eta \eta(\bm u)\right) = \sigma^2(\bm
+    u)\bm I$.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Idenfifiability: condition}
+  \begin{itemize}
+    \item Let $\lambda_\eta^{(\min)}$ be the smallest eigenvalue of $M_{k,
+    n}(\eta)$
+    \item Let $\lambda_s^{(\max)}$ the largest eigenvalue of $M_{k, n}(s)$.
+    \pause
+    \item Then unmixing problem based on $M_{k, n}$ is identifiable if and
+    only if $\lambda_\eta^{(\min)} > \lambda_s^{(\max)}$.
+  \end{itemize}
+  \pause
+  Meaning: all the components of $\eta$ are nonstationary in the mean.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Sample version of the estimator}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  Above we focused on scatter based on $\mathrm{m}_{j}(x) = \frac{1}{n}
+  \sum_{\bm u\in S_j} \mathbb{E}\left(x(\bm u)\right)$.
+  \begin{itemize}
+    \item[$\Rightarrow$] In practice the expected value needs to be dropped.
+  \end{itemize}
+  \pause
+  Define,
+  \begin{equation*}
+    \begin{split}
+      \hat{\mathrm{m}}_j(x) &= \frac{1}{n} \sum_{\bm u\in S_j}
+      x(\bm u, t), \\
+      \widehat{\mathrm{Cov}}_j(x) &= \frac{1}{n} \sum_{\bm u\in S_j}
+      \left(\bm x(\bm u) - \hat{\mathrm{m}}_j(x)\right)
+      \left(\bm x(\bm u) - \hat{\mathrm{m}}_j(x)\right)^\intercal,
+    \end{split}
+  \end{equation*}
+  \pause
+  and
+  \begin{equation*}
+    \hat{M}_{k, n}(x) = \frac{1}{k}\sum_{j=1}^k
+    \left(\hat{\mathrm{m}}_j(x) - \hat{\mathrm{m}}_0(x)\right)
+    \left(\hat{\mathrm{m}}_j(x) - \hat{\mathrm{m}}_0(x)\right)^\intercal
+  \end{equation*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Our asymptotic framework}
+  \begin{itemize}
+    \item Sample size per block and number of blocks: $n\to\infty$ and
+    $k\to\infty$ ($n_0 = nk\to\infty$).
+    \pause
+    \item Increasing domain: $\mathrm{Leb}\left(\mathcal{U}\right) =
+    \mathrm{Leb}\left( \mathcal{U}_{n_0}\right) \to \infty$, as $n_0\to\infty$.
+    \pause
+    \item Suppose that the smallest eigenvalue $\lambda_{\eta, k, n}^{(min)}$ of
+    $M_{k,n}(\eta)$ satisfies
+    \begin{equation*}
+      \liminf_{k,n\to\infty} \lambda_{\eta, k, n}^{(min)} \geq c,
+      \quad c > 0.
+    \end{equation*}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymptotic identifiability}
+  If we have 
+  \begin{equation*}
+    \label{eq:convergence_m}
+    \left\|\hat M_{k, n}(z^{st}) - M_{k, n}(z)\right\|
+    = O_\mathbb{P}\left(r_{k,n}\right),
+  \end{equation*}
+  and that
+  \begin{equation*}
+    \left\|\widehat{\mathrm{Cov}}_0(\bm z) - \bm I\right\|
+    = O_\mathbb{P}\left(\frac{1}{\sqrt{n_0}}\right),
+  \end{equation*}
+  where $1/\sqrt{n_0} = O(r_{k, n})$, then there exists a sequence of random
+  invertible matrices $\hat{\bm B}_\eta^{(k, n)}\in\mathbb{R}^{q\times q}$ and
+  $\hat{\bm B}_s^{(k, n)}\in\mathbb{R}^{(d - q)\times (d - q)}$ such that
+  \begin{equation*}
+    \left\|
+    \begin{pmatrix}
+      \hat{\bm B}_\eta^{(k, n)} & 0 \\
+      0 & \hat{\bm B}_s^{(k, n)}
+    \end{pmatrix}
+    \hat{\bm \Omega}_{1,k,n}(\bm x) - \bm A^{-1}\right\|
+    = O_\mathbb{P}\left(r_{k, n}\right).
+  \end{equation*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Other assumptions}
+  \begin{itemize}
+    \item \textbf{Finite dependence}: Let $P_1,
+    P_2\subset\mathcal{U}\times\mathcal{T}$. There exists a fixed $L > 0$ not
+    depending on the sets $P_1$ and $P_2$ such that if $\min\left\{\|\bm p - \bm
+    p'\| : \bm p\in P_1, \bm p'\in P_2\right\} > L$ then the sets $\{\bm z(\bm
+    p): \bm p\in P_1\}$ and $\{\bm z(\bm p): \bm p\in P_2\}$ are independent.
+    \item \textrm{}: It holds that $\sup_{i\in[n_0]}\max_{j\in[d]}\mathbb{E}\left|z_j(\bm
+    p_i)\right|^4 \leq C < \infty$ uniformly for all $n_0$.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{The main result}
+  We have
+  \begin{equation*}
+    r_{k,n} = O_\mathbb{P}\left(\frac{1}{n} + \frac{1}{kn}\right)
+  \end{equation*}
+  \pause
+  Messages:
+  \begin{itemize}
+    \item For $\sqrt{n_0}$-consistent estimation you need $k/n=O(1)$.
   \end{itemize}
 \end{frame}
 
